@@ -1,0 +1,19 @@
+spring:
+  application:
+    name:
+      accounts
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/bank_of_noida
+    username: postgres
+    password: 42069
+    driverClassName: org.postgresql.Driver

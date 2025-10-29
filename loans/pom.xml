@@ -8,7 +8,7 @@
         <version>3.4.1</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.eazybytes</groupId>
+    <groupId>com.bankofnoida</groupId>
     <artifactId>loans</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>loans</name>
@@ -93,6 +93,11 @@
                         </path>
                     </annotationProcessorPaths>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.3</version>
             </plugin>
         </plugins>
     </build>

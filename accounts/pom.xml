@@ -11,6 +11,7 @@
 	<groupId>com.bank.noida</groupId>
 	<artifactId>accounts</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 	<name>accounts</name>
 	<description>Bank of Noida Accounts Microservice</description>
 	<url/>
@@ -102,7 +103,12 @@
 					</excludes>
 				</configuration>
 			</plugin>
-		</plugins>
+            <plugin>
+                <groupId>com.google.cloud.tools</groupId>
+                <artifactId>jib-maven-plugin</artifactId>
+                <version>3.4.3</version>
+            </plugin>
+        </plugins>
 	</build>
 
 </project>

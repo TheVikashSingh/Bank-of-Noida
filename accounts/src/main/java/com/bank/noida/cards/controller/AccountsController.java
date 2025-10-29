@@ -36,7 +36,7 @@ public class AccountsController {
 
     @Operation(
             summary = "Create Account ReST API",
-            description = "ReST API to create a new Account in Bank of Noida"
+            description = "ReST API to create a new Account in Bank of Noida"  
     )
     @ApiResponses(
             {

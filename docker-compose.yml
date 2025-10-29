@@ -1,0 +1,126 @@
+version: "3.9"
+
+services:
+  accounts-db:
+    image: postgres:18
+    container_name: accounts-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 42069
+      POSTGRES_DB: accountsdb
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d accountsdb" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "5433:5432"
+    networks:
+      - bank-of-noida-network
+
+  cards-db:
+    image: postgres:18
+    container_name: cards-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 42069
+      POSTGRES_DB: cardsdb
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d cardsdb" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "5434:5432"
+    networks:
+      - bank-of-noida-network
+
+  loans-db:
+    image: postgres:18
+    container_name: loans-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 42069
+      POSTGRES_DB: loansdb
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d loansdb" ]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+    ports:
+      - "5435:5432"
+    networks:
+      - bank-of-noida-network
+
+  accounts-microservice:
+    build:
+      context: ./accounts
+      dockerfile: Dockerfile
+    container_name: "accounts-microservice"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://accounts-db:5432/accountsdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 42069
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      LOGGING_LEVEL_ORG_HIBERNATE_SQL: DEBUG
+      LOGGING_LEVEL_ORG_HIBERNATE_ORM_JDBC_BIND: TRACE
+    ports:
+      - "8080:8080"
+    depends_on:
+      accounts-db:
+        condition: service_healthy
+    networks:
+      - bank-of-noida-network
+
+  cards-microservice:
+    build:
+      context: ./cards
+      dockerfile: Dockerfile
+    container_name: "cards-microservice"
+    ports:
+      - "8081:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://cards-db:5432/cardsdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 42069
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      LOGGING_LEVEL_ORG_HIBERNATE_SQL: DEBUG
+      LOGGING_LEVEL_ORG_HIBERNATE_ORM_JDBC_BIND: TRACE
+    depends_on:
+      accounts-db:
+        condition: service_healthy
+    networks:
+      - bank-of-noida-network
+
+  loans-microservice:
+    build:
+      context: ./loans
+      dockerfile: Dockerfile
+    container_name: "loans-microservice"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+      SPRING_DATASOURCE_URL: jdbc:postgresql://loans-db:5432/loansdb
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 42069
+      SPRING_JPA_SHOW_SQL: "true"
+      SPRING_JPA_PROPERTIES_HIBERNATE_FORMAT_SQL: "true"
+      LOGGING_LEVEL_ORG_HIBERNATE_SQL: DEBUG
+      LOGGING_LEVEL_ORG_HIBERNATE_ORM_JDBC_BIND: TRACE
+    ports:
+      - "8082:8080"
+    depends_on:
+      accounts-db:
+        condition: service_healthy
+    networks:
+      - bank-of-noida-network
+
+networks:
+  bank-of-noida-network:
+    driver: "bridge"

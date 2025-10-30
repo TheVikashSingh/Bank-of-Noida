@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +35,8 @@ import org.springframework.web.bind.annotation.*;
 public class AccountsController {
 
     private final IAccountsService iaccountsService;
+
+    private final Environment environment;
 
     @Value("${build.version}")
     private String buildVersion;
@@ -177,8 +180,6 @@ public class AccountsController {
     }
 
 
-
-
     @Operation(
             summary = "Get Build Information",
             description = "Get Build Information of the Accounts Microservice"
@@ -204,6 +205,34 @@ public class AccountsController {
                 .status(HttpStatus.OK)
                 .body(buildVersion);
     }
+
+
+    @Operation(
+            summary = "Get Java Version Information",
+            description = "Get Java Information of the Accounts Microservice"
+    )
+    @ApiResponses(
+            {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "HTTP status OK"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "HTTP status Internal Server Error",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorResponseDTO.class)
+                            )
+                    )
+            }
+    )
+    @GetMapping("/os-version")
+    public ResponseEntity<String> getJavaVersionInfo(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(environment.getProperty("os.name","Failed"));
+    }
+
 
 }
 

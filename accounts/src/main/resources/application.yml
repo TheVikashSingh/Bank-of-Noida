@@ -1,6 +1,12 @@
 server:
   port: 8080
+
 spring:
+  profiles:
+    active:
+      - "prod"
+
+
   application:
     name:
       accounts
@@ -21,8 +27,7 @@ spring:
     driverClassName: org.postgresql.Driver
 
 build:
-  version: "v1.0"
-
+  version: "v1.0-dev"
 
 accounts:
   message: "Welcome to Bank of Noida - accounts"

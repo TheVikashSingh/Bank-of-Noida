@@ -1,0 +1,21 @@
+spring:
+  config:
+    activate:
+      on-profile: "prod"
+
+
+build:
+  version: "v1.0-prod"
+
+
+accounts:
+  message: "Welcome to Bank of Noida - accounts prod"
+  contactDetails:
+    name: "Vikash Pratap Singh - CEO & MD"
+    email: "mailing4vikash@gmail.com"
+  onCallSupport:
+    -(+91) 9865147210
+    -(+91) 8798563017
+
+
+  

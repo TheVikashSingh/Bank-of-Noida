@@ -1,20 +1,3 @@
-#spring.application.name=accounts
-#
-#spring.sql.init.mode=never
-#
-#spring.jpa.database=POSTGRESQL
-#spring.jpa.show-sql=true
-#spring.jpa.hibernate.ddl-auto=none
-#
-#spring.datasource.platform=postgres
-#spring.datasource.url=jdbc:postgresql://localhost:5432/bank_of_noida
-#spring.datasource.username=postgres
-#spring.datasource.password=42069
-#spring.datasource.driver-class-name=org.postgresql.Driver
-#
-#server.port=8080
-
-######################################################
 server:
   port: 8080
 spring:
@@ -40,6 +23,18 @@ spring:
 build:
   version: "v1.0"
 
+
+accounts:
+  message: "Welcome to Bank of Noida - accounts"
+  contactDetails:
+    name: "Vikash Pratap Singh - CEO"
+    email: "mailing4vikash@gmail.com"
+  onCallSupport:
+    -(+91) 9865147210
+    -(+91) 8798563017
+
+
+
 ####################################################
 #spring:
 #  application:
@@ -61,5 +56,21 @@ build:
 #    init:
 #      mode: never
 #####################################################
+#spring.application.name=accounts
+#
+#spring.sql.init.mode=never
+#
+#spring.jpa.database=POSTGRESQL
+#spring.jpa.show-sql=true
+#spring.jpa.hibernate.ddl-auto=none
+#
+#spring.datasource.platform=postgres
+#spring.datasource.url=jdbc:postgresql://localhost:5432/bank_of_noida
+#spring.datasource.username=postgres
+#spring.datasource.password=42069
+#spring.datasource.driver-class-name=org.postgresql.Driver
+#
+#server.port=8080
 
+######################################################
 

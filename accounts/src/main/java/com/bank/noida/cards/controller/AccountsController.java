@@ -2,6 +2,7 @@ package com.bank.noida.cards.controller;
 
 
 import com.bank.noida.cards.constants.AccountsConstants;
+import com.bank.noida.cards.dto.AccountsContactInfoDTO;
 import com.bank.noida.cards.dto.CustomerDTO;
 import com.bank.noida.cards.dto.ErrorResponseDTO;
 import com.bank.noida.cards.dto.ResponseDTO;
@@ -16,6 +17,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,6 +28,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path="/api/",produces = MediaType.APPLICATION_JSON_VALUE)
+@EnableConfigurationProperties(value = {AccountsContactInfoDTO.class})
 @Validated
 @Tag(
         name = "CRUD ReST APIs for Accounts in Bank of Noida",
@@ -37,6 +40,8 @@ public class AccountsController {
     private final IAccountsService iaccountsService;
 
     private final Environment environment;
+
+    private final AccountsContactInfoDTO accountsContactInfoDTO;
 
     @Value("${build.version}")
     private String buildVersion;
@@ -232,6 +237,36 @@ public class AccountsController {
                 .status(HttpStatus.OK)
                 .body(environment.getProperty("os.name","Failed"));
     }
+
+
+    @Operation(
+            summary = "Get Contact Information",
+            description = "Get Contact Information of the Accounts Microservice"
+    )
+    @ApiResponses(
+            {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "HTTP status OK"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "HTTP status Internal Server Error",
+                            content = @Content(
+                                    schema = @Schema(implementation = ErrorResponseDTO.class)
+                            )
+                    )
+            }
+    )
+    @GetMapping("/contact-info")
+    public ResponseEntity<AccountsContactInfoDTO> getContactInfo(){
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .body(accountsContactInfoDTO);
+    }
+
+
+
 
 
 }

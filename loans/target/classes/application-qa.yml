@@ -1,0 +1,20 @@
+spring:
+  config:
+    activate:
+      on-profile: "qa"
+
+
+build:
+  version: "v1.0-qa"
+
+
+accounts:
+  message: "Welcome to Bank of Noida - loans QA"
+  contactDetails:
+    name: "Ms. Heer - QA Analyst"
+    email: "heer555@gmail.com"
+  onCallSupport:
+    -(+91) 9800147210
+    -(+91) 8798500017
+
+

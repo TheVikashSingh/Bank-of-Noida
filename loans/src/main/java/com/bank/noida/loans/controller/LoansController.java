@@ -2,6 +2,7 @@ package com.bank.noida.loans.controller;
 
 import com.bank.noida.loans.constants.LoansConstants;
 import com.bank.noida.loans.dto.ErrorResponseDto;
+import com.bank.noida.loans.dto.LoansContactInfoDTO;
 import com.bank.noida.loans.dto.LoansDto;
 import com.bank.noida.loans.dto.ResponseDto;
 import com.bank.noida.loans.service.ILoansService;
@@ -14,6 +15,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -30,11 +32,13 @@ import org.springframework.web.bind.annotation.*;
 )
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
+@EnableConfigurationProperties(value = {LoansContactInfoDTO.class})
 @AllArgsConstructor
 @Validated
 public class LoansController {
 
     private ILoansService iLoansService;
+    private LoansContactInfoDTO loansContactInfoDTO;
 
     @Operation(
             summary = "Create Loan REST API",
@@ -162,6 +166,11 @@ public class LoansController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(LoansConstants.STATUS_417, LoansConstants.MESSAGE_417_DELETE));
         }
+    }
+
+    @GetMapping("/contact-info")
+    public LoansContactInfoDTO getLoansContactInfoDTO(){
+        return loansContactInfoDTO;
     }
 
 }

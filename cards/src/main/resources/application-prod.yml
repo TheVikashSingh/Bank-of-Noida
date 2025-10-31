@@ -9,7 +9,7 @@ build:
 
 
 accounts:
-  message: "Welcome to Bank of Noida - accounts prod"
+  message: "Welcome to Bank of Noida - cards prod"
   contactDetails:
     name: "Vikash Pratap Singh - CEO & MD"
     email: "mailing4vikash@gmail.com"

@@ -1,0 +1,42 @@
+server:
+  port: 8080
+
+spring:
+  profiles:
+    active:
+      - "qa"
+
+
+  application:
+    name:
+      accounts
+  sql:
+    init:
+      mode: always
+
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/bank_of_noida
+    username: postgres
+    password: 42069
+    driverClassName: org.postgresql.Driver
+
+build:
+  version: "v1.0-dev"
+
+cards:
+  message: "Welcome to Bank of Noida - cards"
+  contactDetails:
+    name: "Vikash Pratap Singh - CEO"
+    email: "mailing4vikash@gmail.com"
+  onCallSupport:
+    -(+91) 9865147210
+    -(+91) 8798563017
+
+
+

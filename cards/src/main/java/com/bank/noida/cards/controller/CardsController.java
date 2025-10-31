@@ -1,6 +1,7 @@
 package com.bank.noida.cards.controller;
 
 import com.bank.noida.cards.constants.CardsConstants;
+import com.bank.noida.cards.dto.CardsContactInfoDTO;
 import com.bank.noida.cards.dto.CardsDto;
 import com.bank.noida.cards.dto.ErrorResponseDto;
 import com.bank.noida.cards.dto.ResponseDto;
@@ -15,6 +16,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.hibernate.cfg.Environment;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +34,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping(path = "/api", produces = {MediaType.APPLICATION_JSON_VALUE})
 @AllArgsConstructor
+@EnableConfigurationProperties(value = {CardsContactInfoDTO.class})
 @Validated
 public class CardsController {
 
     private ICardsService iCardsService;
+    private CardsContactInfoDTO cardsContactInfoDTO;
 
     @Operation(
             summary = "Create Card REST API",
@@ -160,6 +164,12 @@ public class CardsController {
                     .status(HttpStatus.EXPECTATION_FAILED)
                     .body(new ResponseDto(CardsConstants.STATUS_417, CardsConstants.MESSAGE_417_DELETE));
         }
+    }
+
+
+    @GetMapping("/contact-info")
+    public CardsContactInfoDTO getCardsContactInfo(){
+        return cardsContactInfoDTO;
     }
 
 }
